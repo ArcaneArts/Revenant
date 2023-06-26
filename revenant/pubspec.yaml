@@ -1,0 +1,13 @@
+name: revenant
+description: The subsystem for app scripts for the project
+version: 1.0.0
+environment:
+  sdk: ^3.0.5
+dependencies:
+  path: ^1.8.3
+  args: ^2.4.2
+  json_serializable: ^6.7.0
+  json_annotation: ^4.8.1
+dev_dependencies:
+  lints: ^2.1.1
+  build_runner: ^2.4.5

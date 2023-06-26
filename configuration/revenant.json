@@ -1,0 +1,12 @@
+{
+    "appName": "Revenant",
+    "appId": "revenant",
+    "platform": {
+        "ios": {
+            "bundle": "com.example.revenant"
+        },
+        "android": {
+            "packageName": "com.example.revenant"
+        }
+    }
+}
