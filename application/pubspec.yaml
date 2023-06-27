@@ -39,7 +39,7 @@ dependencies:
   delayed_progress_indicator: ^1.0.1
   memcached: ^1.0.2
   mapped_list: ^1.0.0
-  serviced: ^1.0.0
+  serviced: ^1.0.1
   tryhard: ^1.0.1
   flyout: ^1.0.2
   timeago: ^3.4.0
@@ -55,8 +55,12 @@ dependencies:
   fast_log: ^1.0.5
   crypto: ^3.0.3
   flutter_svg: ^2.0.7
+  throttled: ^1.0.1
+  synchronized: ^3.1.0
+  path_provider: ^2.0.15
+  quantum: ^1.1.11
 dev_dependencies:
-  icon_font_generator: ^3.2.0
+  icon_generator: ^4.0.3
   flutter_lints: ^2.0.1
   build_runner: ^2.4.5
   flutter_gen_runner: ^5.3.1

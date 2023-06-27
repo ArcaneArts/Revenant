@@ -15,13 +15,16 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:serviced/serviced.dart';
 
 abstract class RevenantApp {
+  /// Called when its time to build the app widget
   Widget build();
 
+  /// Called when it's time to register services and prep them for startup
   void onRegisterServices();
 
+  /// Called after all services have been registered and the app is about to build the first screen
   Future<void> onStartup();
 
-  Future<Widget> run() async {
+  Future<Widget> _run() async {
     onRegisterServices();
     await services().waitForStartup();
     await onStartup();
@@ -48,6 +51,8 @@ class _RevenantRootState extends State<RevenantRoot> {
   @override
   Widget build(BuildContext context) => widget.app;
 }
+
+Future<void> _initializeStorage() async {}
 
 Future<void> _initializeFirebase() async => await Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform)
@@ -95,6 +100,7 @@ Future<void> _initializeFirebase() async => await Firebase.initializeApp(
 Future<void> _coreInit() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
+  await _initializeStorage();
   try {
     await _initializeFirebase();
     verbose("Firebase Initialized");
@@ -112,7 +118,7 @@ Future<void> _coreInit() async {
 
 void main() => runZonedGuarded(
         () => _coreInit().then((_) => Application()
-            .run()
+            ._run()
             .then((value) => runApp(RevenantRoot(app: value)))), (e, es) {
       error("Zone Error: $e");
       error(es);

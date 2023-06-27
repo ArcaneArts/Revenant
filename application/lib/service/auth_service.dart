@@ -84,16 +84,14 @@ class AuthService extends StatelessService {
         extractLastName(c.user!);
     verbose("Apple First Name: $firstName");
     verbose("Apple Last Name: $lastName");
-    await services().get<UserService>().getUserData(c.user!.uid,
+    await svc<UserService>().getUserData(c.user!.uid,
         firstName: firstName, lastName: lastName, onSignedUp: (user) {
       info("User Signed Up!");
     });
 
     if (firstName != null && lastName != null) {
-      services()
-          .get<UserService>()
-          .updateName(first: firstName, last: lastName)
-          .then((value) =>
+      svc<UserService>().updateName(first: firstName, last: lastName).then(
+          (value) =>
               success("Set first and last name to $firstName $lastName!"));
     }
     return c;
@@ -130,7 +128,7 @@ class AuthService extends StatelessService {
 
       verbose("Google First Name: $firstName");
       verbose("Google Last Name: $lastName");
-      await services().get<UserService>().getUserData(c.user!.uid,
+      await svc<UserService>().getUserData(c.user!.uid,
           firstName: firstName, lastName: lastName, onSignedUp: (user) {
         info("User Signed Up!");
       });
@@ -167,8 +165,8 @@ class AuthService extends StatelessService {
   }
 
   void validateName() {
-    if (services().get<UserService>().lastUser.lastName == null ||
-        services().get<UserService>().lastUser.firstName == null) {
+    if (svc<UserService>().lastUser.lastName == null ||
+        svc<UserService>().lastUser.firstName == null) {
       warn(
           "The user does not have a name, attempting to find it through providers");
       String? firstName = extractFirstName(FirebaseAuth.instance.currentUser!);

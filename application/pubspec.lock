@@ -768,14 +768,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  icon_font_generator:
+  icon_generator:
     dependency: "direct dev"
     description:
-      name: icon_font_generator
-      sha256: "100a4f5093f10cd83ae5ee3f1ca862c90f536436136dadc2bbc2a96aa391a08e"
+      name: icon_generator
+      sha256: "80876dc1692c9c571845beeea8020eac79aba55e7065418f0577c6d9d47bd6e1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "4.0.3"
   image:
     dependency: transitive
     description:
@@ -953,7 +953,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "3087813781ab814e4157b172f1a11c46be20179fcc9bea043e0fba36bc0acaa2"
@@ -1080,6 +1080,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  quantum:
+    dependency: "direct main"
+    description:
+      name: quantum
+      sha256: "668efc7a04aec80f10289e3d309bde9154bb4b33ea3f1e13abd86695f0be4a76"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.11"
   quiver:
     dependency: transitive
     description:
@@ -1108,10 +1116,10 @@ packages:
     dependency: "direct main"
     description:
       name: serviced
-      sha256: "5c6a5035a4e1df28fea526737517620c8a01e53d569d7b4da1b13d2f1cf5be5b"
+      sha256: "28a6b3778271cfa94a2cf034db3f0fca6a619fca3c09802683da9a04a031a51d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   shelf:
     dependency: transitive
     description:
@@ -1230,7 +1238,7 @@ packages:
     source: hosted
     version: "1.2.0"
   synchronized:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: synchronized
       sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
@@ -1261,6 +1269,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  throttled:
+    dependency: "direct main"
+    description:
+      name: throttled
+      sha256: e1dd4c9a6df62cd9b2409dda0688fad88546fb6eb326dc1d294621af0cebf462
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   time:
     dependency: transitive
     description:
@@ -1393,10 +1409,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "1414f27dd781737e51afa9711f2ac2ace6ab4498ee98e20863fa5505aa00c58c"
+      sha256: dfdf0136e0aa7a1b474ea133e67cb0154a0acd2599c4f3ada3b49d38d38793ee
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.4"
+    version: "5.0.5"
   xdg_directories:
     dependency: transitive
     description:

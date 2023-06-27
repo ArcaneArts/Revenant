@@ -19,10 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 25), () {
-      if (services().get<AuthService>().isSignedIn()) {
+      if (svc<AuthService>().isSignedIn()) {
         services()
             .get<UserService>()
-            .bind(services().get<UserService>().uid())
+            .bind(svc<UserService>().userId())
             .then((value) {
           Navigator.pushNamedAndRemoveUntil(ctx(), "/", (route) => false);
 
