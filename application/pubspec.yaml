@@ -39,6 +39,7 @@ dependencies:
   delayed_progress_indicator: ^1.0.1
   memcached: ^1.0.2
   mapped_list: ^1.0.0
+  serviced: ^1.0.0
   tryhard: ^1.0.1
   flyout: ^1.0.2
   timeago: ^3.4.0
@@ -51,16 +52,20 @@ dependencies:
   toxic: ^1.0.3
   google_fonts: any
   flutter_animate: ^4.2.0
+  fast_log: ^1.0.5
+  crypto: ^3.0.3
+  flutter_svg: ^2.0.7
 dev_dependencies:
   icon_font_generator: ^3.2.0
   flutter_lints: ^2.0.1
   build_runner: ^2.4.5
   flutter_gen_runner: ^5.3.1
+  flutter_launcher_icons: ^0.13.1
   dependency_validator: ^3.2.2
 flutter_icons:
   ios: true
   remove_alpha_ios: true
-  image_path: "../configuration/icon.png"
+  image_path: "assets/icon/icon.png"
 flutter_gen:
   output: lib/util/generated/
   line_length: 80
@@ -69,10 +74,10 @@ flutter_gen:
     flare_flutter: true
     rive: true
 flutter_native_splash:
-  color: "#ffffff"
-  image: "../configuration/icon_splash_light.png"
-  color_dark: "#000000"
-  image_dark: "../configuration/icon_splash_dark.png"
+  color: "#f3f2ff"
+  image: "assets/icon/splash_light.png"
+  color_dark: "#151526"
+  image_dark: "assets/icon/splash_dark.png"
   android: true
   ios: true
   web: true
@@ -84,5 +89,5 @@ flutter:
         - asset: assets/font/iicons.ttf
   assets:
     - assets/icon/icon.svg
-    - assets/logo/apple.svg
-    - assets/logo/google.svg
+    - assets/icon/apple.svg
+    - assets/icon/google.svg
