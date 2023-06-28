@@ -6,10 +6,12 @@ import 'package:application/service/user_service.dart';
 import 'package:application/ui/screen/home.dart';
 import 'package:application/ui/screen/login.dart';
 import 'package:application/ui/screen/splash.dart';
+import 'package:application/util/generated/assets.gen.dart';
 import 'package:fast_log/fast_log.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:serviced/serviced.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class Application extends RevenantApp {
   final List<GetMiddleware> _middlewares = [ApplicationMiddleware()];
@@ -23,9 +25,7 @@ class Application extends RevenantApp {
   }
 
   @override
-  Future<void> onStartup() async {
-    // Do your own custom async shit before the app opens
-  }
+  Future<void> onStartup() async {}
 
   GetPage _page(String name, GetPageBuilder screen) =>
       GetPage(name: name, page: screen, middlewares: _middlewares);
@@ -42,6 +42,21 @@ class Application extends RevenantApp {
           ),
         ],
       );
+
+  @override
+  Widget buildLoginBackground(BuildContext context) => Container(
+        decoration: BoxDecoration(
+            gradient: RadialGradient(colors: [
+          Theme.of(context).scaffoldBackgroundColor,
+          Theme.of(context).primaryColor.desaturate(25)
+        ], radius: 15)),
+      );
+
+  @override
+  Widget buildLoginLogo(BuildContext context) => Assets.icon.icon.svg(
+      width: 275,
+      height: 275,
+      colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcATop));
 }
 
 class ApplicationMiddleware extends GetMiddleware {

@@ -14,9 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:serviced/serviced.dart';
 
+late RevenantApp rapp;
+
 abstract class RevenantApp {
   /// Called when its time to build the app widget
   Widget build();
+
+  /// Called when building the login background screen
+  Widget buildLoginBackground(BuildContext context);
 
   /// Called when it's time to register services and prep them for startup
   void onRegisterServices();
@@ -25,11 +30,15 @@ abstract class RevenantApp {
   Future<void> onStartup();
 
   Future<Widget> _run() async {
+    rapp = this;
     onRegisterServices();
     await services().waitForStartup();
     await onStartup();
     return build();
   }
+
+  /// Should be 275x275 or something like that
+  Widget buildLoginLogo(BuildContext context);
 }
 
 class RevenantRoot extends StatefulWidget {
