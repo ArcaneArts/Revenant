@@ -95,3 +95,65 @@ flutter:
     - assets/icon/icon.svg
     - assets/icon/apple.svg
     - assets/icon/google.svg
+scripts:
+  # This script basically does it all. Its slow but it does everything to ensure everything is good.
+  update: |
+    flutter pub get
+    dart pub global activate flutter_gen
+    flutter pub run flutter_oss_licenses:generate.dart --output lib/util/generated/oss_licenses.gen.dart
+    flutter pub run flutter_launcher_icons:main
+    flutter pub global activate icon_generator
+    flutter pub run icon_generator --from=assets/icons --out-font=assets/font/iicons.ttf --out-flutter=lib/util/generated/icons.gen.dart --class-name=IIcons --normalize --naming-strategy=snake
+    flutter pub run build_runner build --delete-conflicting-outputs
+    flutter pub run flutter_native_splash:create
+    dart format .
+    dart pub global activate auto_const
+    dart pub global run auto_const
+    flutter pub run dependency_validator
+
+  # Lists dependencies you (probably) arent using for reducing app size
+  validate_dependencies: |
+    flutter pub get
+    flutter pub run dependency_validator
+
+  # Formats all dart sources and auto applies const everywhere it should be
+  format_sources: |
+    dart format .
+    dart pub global activate auto_const
+    dart pub global run auto_const
+
+  # Generates a native splash screen based on the flutter_native_splash configuration above
+  update_app_splash: |
+    flutter pub run flutter_native_splash:create
+
+  # Generates all the icons for the app based on the flutter_icons configuration above
+  update_app_icon: |
+    flutter pub run flutter_launcher_icons:main
+
+  # Generates a custom font ttf and class to access icons. Generates them from svgs in the icons folder.
+  update_icon_font: |
+    flutter pub global activate icon_generator
+    flutter pub run icon_generator --from=assets/icons --out-font=assets/font/iicons.ttf --out-flutter=lib/util/generated/icons.gen.dart --class-name=IIcons --normalize --naming-strategy=snake
+
+  # Generates all json models using json_serializable
+  update_json_models: |
+    flutter pub run build_runner build
+
+  # If your changes are too significant or it fails for some reason use the force script. Slow but works
+  update_json_models_force: |
+    flutter pub run build_runner build --delete-conflicting-outputs
+
+  # Gathers all the packages you use directly and indirectly and creates a class with all the data in it.
+  update_oss_licenses: |
+    flutter pub run flutter_oss_licenses:generate.dart --output lib/util/generated/oss_licenses.gen.dart
+
+  firebase_init: |
+    firebase login
+    dart pub global activate flutterfire_cli
+    flutterfire configure
+
+  # If pod install isnt working and repo update isnt either, this deletes the podfile lock
+  fucking_pods:
+    script: |
+      rm Podfile.lock
+      pod install --repo-update
