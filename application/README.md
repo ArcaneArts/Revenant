@@ -1,6 +1,8 @@
 # Revenant
 Do each section in order, or at least thats how it was intended to be done.
 
+# Don't open this project before following step 1!
+
 ## Prerequisites
 This stuff assumes you have done some kind of flutter development with firebase before. If you have not it might be wise to go over this list because this guide assumes you have all of these.
 
@@ -39,22 +41,25 @@ Your pubspec does more than usual. There is a scripts section at the bottom of t
 ## 1. Claim
 Note down the following properties as you will need them
 
-| Property     | Example       | Description                  |
-|--------------|---------------|------------------------------|
-| app_id       | myguide       | The app id and project name |
-| app_name     | MyGuide       | The human app name          |
-| package_name | cloud.myguide | The android package id      |
-| bundle_id    | cloud.myguide | The apple bundle identifier |
+| Property     | Example       | Description                        |
+|--------------|---------------|------------------------------------|
+| app_id       | myguide       | The app id and project name        |
+| app_name     | MyGuide       | The human app name                 |
+| package_name | cloud.myguide | The android package id             |
+| bundle_id    | cloud.myguide | The apple bundle identifier        |
+| domain       | myguide.cloud | The domain your web app will go to |
 
+### 1.1: Flutter
+1. Rename the `application` folder to your `app_id` as the folder name. 
+2. Open `REPO/<app_id>` in IntelliJ
+3. `pubspec.yaml` change `name: application` to your `app_id`
 
-#### Android
-1. Close IntelliJ... You could keep it open but it might fuck up some of the refactors your about to attempt.
-2. `pubspec.yaml` change `name: application` to your `app_id`
-3. `android/app/build.gradle` change `namespace "art.arcane.revenant.application"` to your `package_name`
-4. `android/app/build.gradle` change `applicationId "art.arcane.revenant.application"` to your `package_name`
-5. `android/app/src/main/AndroidManifest.xml` change `android:label="application"` to your `app_id`
+### 1.2: Android
+1. `android/app/build.gradle` change `namespace "art.arcane.revenant.application"` to your `package_name`
+2. `android/app/build.gradle` change `applicationId "art.arcane.revenant.application"` to your `package_name`
+3. `android/app/src/main/AndroidManifest.xml` change `android:label="application"` to your `app_id`
 
-#### IOS
+### 1.3: IOS
 1. Claim your `bundle_id` on Apple Developer
    * Dont use wildcard bundles!
    * This is for IOS only, you wont need a macos one!
@@ -72,3 +77,4 @@ Note down the following properties as you will need them
 * [Create a new Project on Firebase](https://console.firebase.google.com/)
   * Keep Google Analytics Enabled (you can use the default firebase analytics account)
 * Run the script `flutterfire_init` in pubspec and select this project. 
+* 
