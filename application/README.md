@@ -94,11 +94,19 @@ Note down the following properties as you will need them
     * Hit Save
 * Run the script `firebase_init` in the pubspec and select this project.
   1. 
-* Run the script `flutterfire_init` in pubspec and select this project.
-  1. Select your newly created project (up down arrow keys, then enter for selection)
-  2. For platform selection, just press enter. Keep android ios and web selected. Keep macos unselected.
-  3. It will ask to modify the android gradle files hit YES (enter)
-  4. It will ask to modify the existing firebase_options file hit YES (enter)
+* Run the script `flutterfire_init` in pubspec.
+  1. Use up and down arrow keys to move options, SPACE to select ENTER is done
+     * Select Firestore
+     * Select Hosting (not github actions though)
+     * Select Storage (if created above)
+     * Select Remote Config
+     * Hit Enter
+  2. Select Use Existing Project and select yours
+  3. Go through the firebase setup then get to flutterfire
+  4. Select your newly created project (up down arrow keys, then enter for selection)
+  5. For platform selection, just press enter. Keep android ios and web selected. Keep macos unselected.
+  6. It will ask to modify the android gradle files hit YES (enter)
+  7. It will ask to modify the existing firebase_options file hit YES (enter)
 * Run the sript `update` and wait for it to finish (it could take a minute or two)
 
 ## 3. Keys
