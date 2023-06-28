@@ -149,8 +149,8 @@ scripts:
 
   firebase_init: |
     firebase login
-    dart pub global activate flutterfire_cli
-    dart pub run flutterfire configure
+    flutter pub global activate flutterfire_cli
+    dart pub global run flutterfire_cli:flutterfire configure
 
   # If pod install isnt working and repo update isnt either, this deletes the podfile lock
   fucking_pods:

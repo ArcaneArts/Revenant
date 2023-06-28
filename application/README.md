@@ -76,5 +76,12 @@ Note down the following properties as you will need them
 ## 2. Firebase
 * [Create a new Project on Firebase](https://console.firebase.google.com/)
   * Keep Google Analytics Enabled (you can use the default firebase analytics account)
-* Run the script `flutterfire_init` in pubspec and select this project. 
-* 
+* Run the script `flutterfire_init` in pubspec and select this project.
+  1. Select your newly created project (up down arrow keys, then enter for selection)
+  2. For platform selection, just press enter. Keep android ios and web selected. Keep macos unselected.
+  3. It will ask to modify the android gradle files hit YES (enter)
+  4. It will ask to modify the existing firebase_options file hit YES (enter)
+* Run the sript `update` and wait for it to finish (it could take a minute or two)
+
+## 3. Play Store
+* Open Key
