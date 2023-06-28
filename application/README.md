@@ -15,6 +15,7 @@ This stuff assumes you have done some kind of flutter development with firebase 
 * [Flutter 3.10+](https://docs.flutter.dev/get-started/install)
 * [NodeJs 16](https://nodejs.org/en/download/current)
 * [KeyStore Explorer](https://keystore-explorer.org/)
+* [Strong Password Generator](https://passwordsgenerator.net/)
 * [Firebase CLI](https://firebase.google.com/docs/cli#mac-linux-npm)
   * Install with NPM `npm install -g firebase-tools`
   * Log in with `firebase login`
@@ -83,5 +84,85 @@ Note down the following properties as you will need them
   4. It will ask to modify the existing firebase_options file hit YES (enter)
 * Run the sript `update` and wait for it to finish (it could take a minute or two)
 
-## 3. Play Store
-* Open Key
+## 3. Keys
+1. Create a folder in the root directory of the repo (NOT INSIDE THE `app_id` folder)
+2. On your firebase project -> Settings (scroll down to the apps)
+  * Click on Android & download the google-services.json into the keys folder
+  * Click on IOS and download the GoogleService-Info.plist into the keys folder
+3. Open KeyStore Explorer
+  * File > New and use the JKS format
+  * Right Click > Generate new Key Pair (RSA 2,048)
+    * Version 3
+    * Signature Algorithm: SHA-256 with RSA
+    * Validity Period: 25 Years
+    * Name: Click the Address Book Button and fill them out (its not required but good idea to at least get the common name CN filled out)
+      * The common name should be `<app_id>-production`
+  * Literally do the same thing but with the CN common name as `<app_id>-debug` instead.
+  * Now with both keys
+    * Right Click -> Set Password (generate a unique one with at least 32 chars on password generator)
+    * Save the `<key_name>: <password>` into a file called `unlock.txt` in the keys folder. Note: You cannot open source this app because of these keys!
+  * File > Save
+    * Set unique password for the entire keystore (32 chars prolly)
+    * Save the `keystore: <password>` into the unlock file. You should have 3 passwords in here now
+    * Save the file to `keys/keystore.jks`
+3. Open the `android/app/build.gradle`
+4. Find the signing configs section and replace the entire section with 
+
+```groovy
+signingConfigs {
+    release {
+        storeFile file("../../../keystore.jks")
+        storePassword '<the keystore password>'
+        keyAlias '<key_id>-production'
+        keyPassword '<the key password>'
+    }
+    debug {
+        storeFile file("../../../keystore.jks")
+        storePassword '<the keystore password>'
+        keyAlias '<key_id>-debug'
+        keyPassword '<the key password>'
+    }
+}
+```
+
+5. Replace the build types with
+
+```groovy
+buildTypes {
+    release {
+        debuggable false
+        signingConfig signingConfigs.release
+    }
+
+    debug {
+        debuggable true
+        signingConfig signingConfigs.debug
+    }
+}
+```
+
+## 4. Play Store
+1. Run the script `build_appbundle_release` (it tells you where it outputs to)
+2. Create a new App on the Play Store and upload your appbundle (you will need to configure a lot of stuff so allocate 30 minutes to setting up the play store)
+3. Keep it as Internal Test for now
+
+## 5. Firebase App Configuration
+To get firebase to work with sign in with google and sign in with apple we need to prove that our app is actually our app and was actually downloaded from the play store (or its our debug key that only we have).
+
+1. Open Firebase > Build > Authentication (hit get started)
+   * Open the Sign-In Method Tab
+   * Add Provider > Click on Google & Switch on Enable
+   * Add Provider > Click on Apple & Switch on Enable
+2. Open Settings > Project Settings (scroll down to apps)
+3. Select the Android App and Add the following fingerprints
+  * Open AndroidStudio and open `android` directory
+  * Run the signing report gradle script
+  * For the debug configuration paste in both the MD5 and SHA-256 signatures
+  * For the release configuration do the same paste both
+  * In Play Store go to App Integrity and copy both signatures and also put those into firebase
+  * You should have 6 signatures (3 sha-256 and 3 md5)
+4. Select the IOS App
+   * Set the team id to your apple developer team id
+
+## 6. Run & Test
+We want to make sure google sign in is working and firebase is picking up the app. It may take a couple tries, this shit is buggy on new projects. If everything works, then you are pretty much done however there is more stuff to configure but its not essential to development beginnings. Do the other checklists when you want those things setup or they are alternative things you could do but arent essential.

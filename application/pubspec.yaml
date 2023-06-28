@@ -157,3 +157,10 @@ scripts:
     script: |
       rm Podfile.lock
       pod install --repo-update
+    directory: android
+
+  android_signatures:
+    script: ./gradlew signingReport
+    directory: android
+
+  build_appbundle_release: flutter build appbundle --release
