@@ -147,8 +147,10 @@ scripts:
   update_oss_licenses: |
     flutter pub run flutter_oss_licenses:generate.dart --output lib/util/generated/oss_licenses.gen.dart
 
+  # Initializes firebase and flutterfire
   firebase_init: |
     firebase login
+    firebase init
     flutter pub global activate flutterfire_cli
     dart pub global run flutterfire_cli:flutterfire configure
 
@@ -164,3 +166,6 @@ scripts:
     directory: android
 
   build_appbundle_release: flutter build appbundle --release
+
+  deploy_web_beta: firebase deploy --only hosting:revenant-beta
+  deploy_web_production: firebase deploy --only hosting:revenant

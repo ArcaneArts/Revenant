@@ -40,15 +40,18 @@ Your pubspec does more than usual. There is a scripts section at the bottom of t
 **Flutter development is 50% programming, 50% running scripts that almost work 100% of the time.**
 
 ## 1. Claim
+> The point of this step is to actually claim the app as your own and not just keep it as a template. It's super important because changing your package name in the future is annoying so lets get it over with!
+
 Note down the following properties as you will need them
 
-| Property     | Example       | Description                        |
-|--------------|---------------|------------------------------------|
-| app_id       | myguide       | The app id and project name        |
-| app_name     | MyGuide       | The human app name                 |
-| package_name | cloud.myguide | The android package id             |
-| bundle_id    | cloud.myguide | The apple bundle identifier        |
-| domain       | myguide.cloud | The domain your web app will go to |
+| Property     | Example       | Description                         |
+|--------------|---------------|-------------------------------------|
+| app_id       | myguide       | The app id and project name         |
+| app_name     | MyGuide       | The human app name                  |
+| package_name | cloud.myguide | The android package id              |
+| bundle_id    | cloud.myguide | The apple bundle identifier         |
+| domain       | myguide.cloud | The domain your web app will go to  |
+| region       | us_central    | The cloud region your shit runs on  |
 
 ### 1.1: Flutter
 1. Rename the `application` folder to your `app_id` as the folder name. 
@@ -75,8 +78,22 @@ Note down the following properties as you will need them
    * Change `Bundle Display Name` to your `app_name`
 
 ## 2. Firebase
+> In this section we create a firebase project in the cloud and link the api keys and ids to our project using flutterfire.
+
 * [Create a new Project on Firebase](https://console.firebase.google.com/)
   * Keep Google Analytics Enabled (you can use the default firebase analytics account)
+  * Click on Build > Hosting > Get Started (required)
+  * Click on Build > Firestore > Create DB (required)
+    * Start in Production Mode
+    * Set the location to nam5 or the best multi-region near you.
+  * Click on Build > Storage > Get Started (if you need storage)
+    * Start in Production Mode
+    * Set the location to nam5 or the best multi-region near you.
+  * Click on Build > Remote Config > Create Configuration
+    * Name the first parameter derp or something and give it a false boolean value just to init it
+    * Hit Save
+* Run the script `firebase_init` in the pubspec and select this project.
+  1. 
 * Run the script `flutterfire_init` in pubspec and select this project.
   1. Select your newly created project (up down arrow keys, then enter for selection)
   2. For platform selection, just press enter. Keep android ios and web selected. Keep macos unselected.
@@ -85,6 +102,7 @@ Note down the following properties as you will need them
 * Run the sript `update` and wait for it to finish (it could take a minute or two)
 
 ## 3. Keys
+> This is a crucial step and will ensure ease of development and app integrity down the line.
 1. Create a folder in the root directory of the repo (NOT INSIDE THE `app_id` folder)
 2. On your firebase project -> Settings (scroll down to the apps)
   * Click on Android & download the google-services.json into the keys folder
@@ -105,8 +123,8 @@ Note down the following properties as you will need them
     * Set unique password for the entire keystore (32 chars prolly)
     * Save the `keystore: <password>` into the unlock file. You should have 3 passwords in here now
     * Save the file to `keys/keystore.jks`
-3. Open the `android/app/build.gradle`
-4. Find the signing configs section and replace the entire section with 
+4. Open the `android/app/build.gradle`
+5. Find the signing configs section and replace the entire section with 
 
 ```groovy
 signingConfigs {
@@ -125,7 +143,7 @@ signingConfigs {
 }
 ```
 
-5. Replace the build types with
+6. Replace the build types with
 
 ```groovy
 buildTypes {
@@ -164,5 +182,42 @@ To get firebase to work with sign in with google and sign in with apple we need 
 4. Select the IOS App
    * Set the team id to your apple developer team id
 
-## 6. Run & Test
-We want to make sure google sign in is working and firebase is picking up the app. It may take a couple tries, this shit is buggy on new projects. If everything works, then you are pretty much done however there is more stuff to configure but its not essential to development beginnings. Do the other checklists when you want those things setup or they are alternative things you could do but arent essential.
+## Web Hosting
+> To support our web app we need to do the following steps. This will host two sites a production site and beta site.
+1. Open Firebase > Build > Hosting (get started,next,next,finish)
+   * Add your domain here! Link a beta subdomain too for the beta site
+   * Hit Add Another Site (name it beta-<firebase_project_id> but its not important)
+   * In your pubspec change deploy_web_beta and deploy_web_production scripts to match these websites
+2. Edit your `firebase.json` hosting section
+
+```json
+"hosting": [
+    {
+      "site": "<site_id>",
+      "public": "<app_id>/build/web",
+      "predeploy": [
+        "cd <app_id> && flutter build web --release --web-renderer canvaskit --dart2js-optimization O4 --verbose"
+      ],
+      "ignore": [
+        "firebase.json",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "site": "beta-<site_id>",
+      "public": "<app_id>/build/web",
+      "predeploy": [
+        "cd <app_id> && flutter build web --release --web-renderer canvaskit --dart2js-optimization O4 --verbose"
+      ],
+      "ignore": [
+        "firebase.json",
+        "**/node_modules/**"
+      ]
+    }
+  ],
+
+3. Run both the deploy_web_beta and deploy_web_production scripts to see if it works and deploys out to firebase!
+```
+
+## Run & Test
+> We want to make sure google sign in is working and firebase is picking up the app. It may take a couple tries, this shit is buggy on new projects. If everything works, then you are pretty much done however there is more stuff to configure but its not essential to development beginnings. Do the other checklists when you want those things setup or they are alternative things you could do but arent essential.
